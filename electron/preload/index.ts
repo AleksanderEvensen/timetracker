@@ -1,8 +1,24 @@
-import { contextBridge } from "electron";
+import { contextBridge, ipcRenderer } from "electron";
 import { electronAPI } from "@electron-toolkit/preload";
 
-// Custom APIs for renderer
-const api = {};
+type DbMethod = "run" | "all" | "values" | "get";
+
+type DbQuery = {
+  sql: string;
+  params: unknown[];
+  method: DbMethod;
+};
+
+const api = {
+  db: {
+    execute: (sql: string, params: unknown[], method: DbMethod) =>
+      ipcRenderer.invoke("db:execute", sql, params, method) as Promise<{
+        rows: unknown[];
+      }>,
+    batch: (queries: DbQuery[]) =>
+      ipcRenderer.invoke("db:batch", queries) as Promise<Array<{ rows: unknown[] }>>,
+  },
+};
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise

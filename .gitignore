@@ -5,3 +5,9 @@ dist/
 out/
 release/
 .fallow/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+.env.local
+.env.*.local

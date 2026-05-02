@@ -8,6 +8,8 @@ import { devtools } from "@tanstack/devtools-vite";
 
 const external = [
   "electron",
+  "@libsql/client",
+  "libsql",
   ...builtinModules,
   ...builtinModules.map((m) => `node:${m}`),
 ];
