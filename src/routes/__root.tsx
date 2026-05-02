@@ -8,6 +8,7 @@ import {
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import appCss from "#/styles.css?url";
+import { ThemeEditor } from "#/components/compositions/theme-editor";
 import { TooltipProvider } from "#/components/ui/tooltip";
 
 export const Route = createRootRoute({
@@ -37,6 +38,7 @@ function RootDocument() {
       <body>
         <TooltipProvider>
           <Outlet />
+          <ThemeEditor />
         </TooltipProvider>
         <TanStackDevtools
           config={{
