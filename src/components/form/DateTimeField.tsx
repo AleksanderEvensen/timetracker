@@ -1,7 +1,7 @@
 import { useId } from "react";
 
 import { useFieldContext } from "#/hooks/form";
-import { DatePicker } from "#/components/ui/date-picker";
+import { DateTimePicker } from "#/components/ui/date-time-picker";
 import {
   Field,
   FieldDescription,
@@ -9,7 +9,7 @@ import {
   FieldLabel,
 } from "#/components/ui/field";
 
-interface DateFieldProps {
+interface DateTimeFieldProps {
   label?: string;
   required?: boolean;
   description?: string;
@@ -18,29 +18,30 @@ interface DateFieldProps {
   disabled?: boolean;
 }
 
-function dateStringToDate(value?: string): Date | undefined {
+function localStringToDate(value?: string): Date | undefined {
   if (!value) return undefined;
-  const [y, m, d] = value.split("-").map(Number);
-  if (!y || !m || !d) return undefined;
-  return new Date(y, m - 1, d);
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? undefined : date;
 }
 
-function dateToDateString(value?: Date): string {
+function dateToLocalString(value?: Date): string {
   if (!value) return "";
   const year = value.getFullYear();
   const month = String(value.getMonth() + 1).padStart(2, "0");
   const day = String(value.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
+  const hours = String(value.getHours()).padStart(2, "0");
+  const minutes = String(value.getMinutes()).padStart(2, "0");
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
 }
 
-export function DateField({
+export function DateTimeField({
   label,
   required,
   description,
   hideError = false,
   placeholder,
   disabled,
-}: DateFieldProps) {
+}: DateTimeFieldProps) {
   const field = useFieldContext<string>();
   const inputId = useId();
 
@@ -53,10 +54,10 @@ export function DateField({
           {label} {required && <span className="text-destructive">*</span>}
         </FieldLabel>
       )}
-      <DatePicker
+      <DateTimePicker
         id={inputId}
-        value={dateStringToDate(field.state.value)}
-        onChange={(date) => field.handleChange(dateToDateString(date))}
+        value={localStringToDate(field.state.value)}
+        onChange={(date) => field.handleChange(dateToLocalString(date))}
         onBlur={field.handleBlur}
         placeholder={placeholder}
         disabled={disabled}

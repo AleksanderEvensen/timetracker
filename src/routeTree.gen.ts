@@ -10,20 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SidebarLayoutRouteImport } from './routes/_sidebar-layout'
-import { Route as SidebarLayoutIndexRouteImport } from './routes/_sidebar-layout/index'
 import { Route as SidebarLayoutTimelineRouteImport } from './routes/_sidebar-layout/timeline'
 import { Route as SidebarLayoutSettingsRouteImport } from './routes/_sidebar-layout/settings'
+import { Route as SidebarLayoutTasksLayoutRouteImport } from './routes/_sidebar-layout/_tasks-layout'
 import { Route as SidebarLayoutProjectsIndexRouteImport } from './routes/_sidebar-layout/projects.index'
+import { Route as SidebarLayoutTasksLayoutIndexRouteImport } from './routes/_sidebar-layout/_tasks-layout/index'
 import { Route as SidebarLayoutProjectsIdRouteImport } from './routes/_sidebar-layout/projects.$id'
+import { Route as SidebarLayoutTasksLayoutTaskIdRouteImport } from './routes/_sidebar-layout/_tasks-layout/$taskId'
 
 const SidebarLayoutRoute = SidebarLayoutRouteImport.update({
   id: '/_sidebar-layout',
   getParentRoute: () => rootRouteImport,
-} as any)
-const SidebarLayoutIndexRoute = SidebarLayoutIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => SidebarLayoutRoute,
 } as any)
 const SidebarLayoutTimelineRoute = SidebarLayoutTimelineRouteImport.update({
   id: '/timeline',
@@ -35,53 +32,88 @@ const SidebarLayoutSettingsRoute = SidebarLayoutSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => SidebarLayoutRoute,
 } as any)
+const SidebarLayoutTasksLayoutRoute =
+  SidebarLayoutTasksLayoutRouteImport.update({
+    id: '/_tasks-layout',
+    getParentRoute: () => SidebarLayoutRoute,
+  } as any)
 const SidebarLayoutProjectsIndexRoute =
   SidebarLayoutProjectsIndexRouteImport.update({
     id: '/projects/',
     path: '/projects/',
     getParentRoute: () => SidebarLayoutRoute,
   } as any)
+const SidebarLayoutTasksLayoutIndexRoute =
+  SidebarLayoutTasksLayoutIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => SidebarLayoutTasksLayoutRoute,
+  } as any)
 const SidebarLayoutProjectsIdRoute = SidebarLayoutProjectsIdRouteImport.update({
   id: '/projects/$id',
   path: '/projects/$id',
   getParentRoute: () => SidebarLayoutRoute,
 } as any)
+const SidebarLayoutTasksLayoutTaskIdRoute =
+  SidebarLayoutTasksLayoutTaskIdRouteImport.update({
+    id: '/$taskId',
+    path: '/$taskId',
+    getParentRoute: () => SidebarLayoutTasksLayoutRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof SidebarLayoutIndexRoute
+  '/': typeof SidebarLayoutTasksLayoutIndexRoute
   '/settings': typeof SidebarLayoutSettingsRoute
   '/timeline': typeof SidebarLayoutTimelineRoute
+  '/$taskId': typeof SidebarLayoutTasksLayoutTaskIdRoute
   '/projects/$id': typeof SidebarLayoutProjectsIdRoute
   '/projects/': typeof SidebarLayoutProjectsIndexRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof SidebarLayoutTasksLayoutIndexRoute
   '/settings': typeof SidebarLayoutSettingsRoute
   '/timeline': typeof SidebarLayoutTimelineRoute
-  '/': typeof SidebarLayoutIndexRoute
+  '/$taskId': typeof SidebarLayoutTasksLayoutTaskIdRoute
   '/projects/$id': typeof SidebarLayoutProjectsIdRoute
   '/projects': typeof SidebarLayoutProjectsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_sidebar-layout': typeof SidebarLayoutRouteWithChildren
+  '/_sidebar-layout/_tasks-layout': typeof SidebarLayoutTasksLayoutRouteWithChildren
   '/_sidebar-layout/settings': typeof SidebarLayoutSettingsRoute
   '/_sidebar-layout/timeline': typeof SidebarLayoutTimelineRoute
-  '/_sidebar-layout/': typeof SidebarLayoutIndexRoute
+  '/_sidebar-layout/_tasks-layout/$taskId': typeof SidebarLayoutTasksLayoutTaskIdRoute
   '/_sidebar-layout/projects/$id': typeof SidebarLayoutProjectsIdRoute
+  '/_sidebar-layout/_tasks-layout/': typeof SidebarLayoutTasksLayoutIndexRoute
   '/_sidebar-layout/projects/': typeof SidebarLayoutProjectsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/settings' | '/timeline' | '/projects/$id' | '/projects/'
+  fullPaths:
+    | '/'
+    | '/settings'
+    | '/timeline'
+    | '/$taskId'
+    | '/projects/$id'
+    | '/projects/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/settings' | '/timeline' | '/' | '/projects/$id' | '/projects'
+  to:
+    | '/'
+    | '/settings'
+    | '/timeline'
+    | '/$taskId'
+    | '/projects/$id'
+    | '/projects'
   id:
     | '__root__'
     | '/_sidebar-layout'
+    | '/_sidebar-layout/_tasks-layout'
     | '/_sidebar-layout/settings'
     | '/_sidebar-layout/timeline'
-    | '/_sidebar-layout/'
+    | '/_sidebar-layout/_tasks-layout/$taskId'
     | '/_sidebar-layout/projects/$id'
+    | '/_sidebar-layout/_tasks-layout/'
     | '/_sidebar-layout/projects/'
   fileRoutesById: FileRoutesById
 }
@@ -98,13 +130,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SidebarLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_sidebar-layout/': {
-      id: '/_sidebar-layout/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof SidebarLayoutIndexRouteImport
-      parentRoute: typeof SidebarLayoutRoute
-    }
     '/_sidebar-layout/timeline': {
       id: '/_sidebar-layout/timeline'
       path: '/timeline'
@@ -119,12 +144,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SidebarLayoutSettingsRouteImport
       parentRoute: typeof SidebarLayoutRoute
     }
+    '/_sidebar-layout/_tasks-layout': {
+      id: '/_sidebar-layout/_tasks-layout'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof SidebarLayoutTasksLayoutRouteImport
+      parentRoute: typeof SidebarLayoutRoute
+    }
     '/_sidebar-layout/projects/': {
       id: '/_sidebar-layout/projects/'
       path: '/projects'
       fullPath: '/projects/'
       preLoaderRoute: typeof SidebarLayoutProjectsIndexRouteImport
       parentRoute: typeof SidebarLayoutRoute
+    }
+    '/_sidebar-layout/_tasks-layout/': {
+      id: '/_sidebar-layout/_tasks-layout/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof SidebarLayoutTasksLayoutIndexRouteImport
+      parentRoute: typeof SidebarLayoutTasksLayoutRoute
     }
     '/_sidebar-layout/projects/$id': {
       id: '/_sidebar-layout/projects/$id'
@@ -133,21 +172,44 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SidebarLayoutProjectsIdRouteImport
       parentRoute: typeof SidebarLayoutRoute
     }
+    '/_sidebar-layout/_tasks-layout/$taskId': {
+      id: '/_sidebar-layout/_tasks-layout/$taskId'
+      path: '/$taskId'
+      fullPath: '/$taskId'
+      preLoaderRoute: typeof SidebarLayoutTasksLayoutTaskIdRouteImport
+      parentRoute: typeof SidebarLayoutTasksLayoutRoute
+    }
   }
 }
 
+interface SidebarLayoutTasksLayoutRouteChildren {
+  SidebarLayoutTasksLayoutTaskIdRoute: typeof SidebarLayoutTasksLayoutTaskIdRoute
+  SidebarLayoutTasksLayoutIndexRoute: typeof SidebarLayoutTasksLayoutIndexRoute
+}
+
+const SidebarLayoutTasksLayoutRouteChildren: SidebarLayoutTasksLayoutRouteChildren =
+  {
+    SidebarLayoutTasksLayoutTaskIdRoute: SidebarLayoutTasksLayoutTaskIdRoute,
+    SidebarLayoutTasksLayoutIndexRoute: SidebarLayoutTasksLayoutIndexRoute,
+  }
+
+const SidebarLayoutTasksLayoutRouteWithChildren =
+  SidebarLayoutTasksLayoutRoute._addFileChildren(
+    SidebarLayoutTasksLayoutRouteChildren,
+  )
+
 interface SidebarLayoutRouteChildren {
+  SidebarLayoutTasksLayoutRoute: typeof SidebarLayoutTasksLayoutRouteWithChildren
   SidebarLayoutSettingsRoute: typeof SidebarLayoutSettingsRoute
   SidebarLayoutTimelineRoute: typeof SidebarLayoutTimelineRoute
-  SidebarLayoutIndexRoute: typeof SidebarLayoutIndexRoute
   SidebarLayoutProjectsIdRoute: typeof SidebarLayoutProjectsIdRoute
   SidebarLayoutProjectsIndexRoute: typeof SidebarLayoutProjectsIndexRoute
 }
 
 const SidebarLayoutRouteChildren: SidebarLayoutRouteChildren = {
+  SidebarLayoutTasksLayoutRoute: SidebarLayoutTasksLayoutRouteWithChildren,
   SidebarLayoutSettingsRoute: SidebarLayoutSettingsRoute,
   SidebarLayoutTimelineRoute: SidebarLayoutTimelineRoute,
-  SidebarLayoutIndexRoute: SidebarLayoutIndexRoute,
   SidebarLayoutProjectsIdRoute: SidebarLayoutProjectsIdRoute,
   SidebarLayoutProjectsIndexRoute: SidebarLayoutProjectsIndexRoute,
 }

@@ -42,7 +42,7 @@ function RootDocument() {
         </TooltipProvider>
         <TanStackDevtools
           config={{
-            inspectHotkey: ["Meta", "Shift"],
+            inspectHotkey: ["Meta", "Shift", "Alt"],
             defaultOpen: false,
           }}
           plugins={[

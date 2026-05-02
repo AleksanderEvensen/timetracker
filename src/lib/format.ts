@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, intervalToDuration } from "date-fns";
 
 import {
   CURRENCY_LOCALE,
@@ -38,6 +38,23 @@ export function formatDate(
 
 export function formatTime(date: Date, timeFormat: TimeFormat): string {
   return format(date, TIME_FORMAT_PATTERN[timeFormat]);
+}
+
+function durationParts(seconds: number) {
+  const ms = Math.max(0, Math.floor(seconds)) * 1000;
+  const d = intervalToDuration({ start: 0, end: ms });
+  const hours = (d.days ?? 0) * 24 + (d.hours ?? 0);
+  return { hours, minutes: d.minutes ?? 0, seconds: d.seconds ?? 0 };
+}
+
+export function formatDuration(seconds: number): string {
+  const { hours, minutes } = durationParts(seconds);
+  return `${hours}:${minutes.toString().padStart(2, "0")}`;
+}
+
+export function formatDurationLong(seconds: number): string {
+  const { hours, minutes, seconds: secs } = durationParts(seconds);
+  return `${hours}:${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
 }
 
 export const CURRENCY_LABEL: Record<Currency, string> = {

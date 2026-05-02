@@ -3,6 +3,8 @@ import { SubmitButton } from "#/components/form/SubmitButton";
 import { InputField, PasswordField } from "#/components/form/BasicFields";
 import { NumberField } from "#/components/form/NumberField";
 import { DateField } from "#/components/form/DateField";
+import { DateTimeField } from "#/components/form/DateTimeField";
+import { SelectField } from "#/components/form/SelectField";
 import { TextareaField } from "#/components/form/TextareaField";
 import { FormErrors } from "#/components/form/FromErrors";
 
@@ -36,6 +38,8 @@ export const { useAppForm, withForm, withFieldGroup } = createFormHook({
     PasswordField,
     NumberField,
     DateField,
+    DateTimeField,
+    SelectField,
     TextareaField,
   },
   formComponents: {
