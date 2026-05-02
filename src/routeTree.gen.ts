@@ -9,50 +9,93 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as SidebarLayoutRouteImport } from './routes/_sidebar-layout'
+import { Route as SidebarLayoutIndexRouteImport } from './routes/_sidebar-layout/index'
 
-const IndexRoute = IndexRouteImport.update({
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SidebarLayoutRoute = SidebarLayoutRouteImport.update({
+  id: '/_sidebar-layout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SidebarLayoutIndexRoute = SidebarLayoutIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => SidebarLayoutRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof SidebarLayoutIndexRoute
+  '/projects': typeof ProjectsRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/projects': typeof ProjectsRoute
+  '/': typeof SidebarLayoutIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_sidebar-layout': typeof SidebarLayoutRouteWithChildren
+  '/projects': typeof ProjectsRoute
+  '/_sidebar-layout/': typeof SidebarLayoutIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/projects'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/projects' | '/'
+  id: '__root__' | '/_sidebar-layout' | '/projects' | '/_sidebar-layout/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  SidebarLayoutRoute: typeof SidebarLayoutRouteWithChildren
+  ProjectsRoute: typeof ProjectsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_sidebar-layout': {
+      id: '/_sidebar-layout'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof SidebarLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_sidebar-layout/': {
+      id: '/_sidebar-layout/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof SidebarLayoutIndexRouteImport
+      parentRoute: typeof SidebarLayoutRoute
     }
   }
 }
 
+interface SidebarLayoutRouteChildren {
+  SidebarLayoutIndexRoute: typeof SidebarLayoutIndexRoute
+}
+
+const SidebarLayoutRouteChildren: SidebarLayoutRouteChildren = {
+  SidebarLayoutIndexRoute: SidebarLayoutIndexRoute,
+}
+
+const SidebarLayoutRouteWithChildren = SidebarLayoutRoute._addFileChildren(
+  SidebarLayoutRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  SidebarLayoutRoute: SidebarLayoutRouteWithChildren,
+  ProjectsRoute: ProjectsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

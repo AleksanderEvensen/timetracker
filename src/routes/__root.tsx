@@ -1,8 +1,14 @@
 /// <reference types="vite/client" />
-import { HeadContent, Outlet, Scripts, createRootRoute } from "@tanstack/react-router";
+import {
+  HeadContent,
+  Outlet,
+  Scripts,
+  createRootRoute,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import appCss from "#/styles.css?url";
+import { TooltipProvider } from "#/components/ui/tooltip";
 
 export const Route = createRootRoute({
   ssr: false,
@@ -29,7 +35,9 @@ function RootDocument() {
         <HeadContent />
       </head>
       <body>
-        <Outlet />
+        <TooltipProvider>
+          <Outlet />
+        </TooltipProvider>
         <TanStackDevtools
           config={{
             inspectHotkey: ["Meta", "Shift"],
