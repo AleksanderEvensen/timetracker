@@ -1,12 +1,49 @@
 import { defineConfig } from "vite";
 import solid from "vite-plugin-solid";
+import tailwindcss from "@tailwindcss/vite";
+import { tanstackStart } from "@tanstack/solid-start/plugin/vite";
+import { nitro } from "nitro/vite";
+import { devtools } from "@tanstack/devtools-vite";
 
 // @ts-expect-error process is a nodejs global
 const host = process.env.TAURI_DEV_HOST;
 
+const useSsrPrerender = false;
+
+const sharedPrerenderOptions = {
+  enabled: true,
+  autoSubfolderIndex: true,
+} as const;
+
 // https://vite.dev/config/
 export default defineConfig(async () => ({
-  plugins: [solid()],
+  plugins: [
+    devtools(),
+    nitro(),
+    tailwindcss(),
+    tanstackStart({
+      spa: !useSsrPrerender
+        ? {
+            enabled: true,
+            prerender: {
+              ...sharedPrerenderOptions,
+              outputPath: "/index.html",
+              crawlLinks: false,
+              retryCount: 0,
+            },
+          }
+        : undefined,
+      prerender: useSsrPrerender
+        ? {
+            ...sharedPrerenderOptions,
+            crawlLinks: true,
+            retryCount: 3,
+            retryDelay: 1000,
+          }
+        : undefined,
+    }),
+    solid({ ssr: true }),
+  ],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //
