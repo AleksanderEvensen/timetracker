@@ -46,16 +46,13 @@ export function TaskCreateDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>New task</DialogTitle>
-          <DialogDescription>
-            Add a new task to {projectName}.
-          </DialogDescription>
+          <DialogDescription>Add a new task to {projectName}.</DialogDescription>
         </DialogHeader>
         <form {...formHandlers(form)} className="flex flex-col gap-4">
           <form.AppField
             name="name"
             validators={{
-              onChange: ({ value }) =>
-                value.trim().length === 0 ? "Name is required" : undefined,
+              onChange: ({ value }) => (value.trim().length === 0 ? "Name is required" : undefined),
             }}
           >
             {(field) => (
@@ -69,9 +66,7 @@ export function TaskCreateDialog({
           </form.AppField>
 
           <DialogFooter>
-            <DialogClose render={<Button variant="outline" />}>
-              Cancel
-            </DialogClose>
+            <DialogClose render={<Button variant="outline" />}>Cancel</DialogClose>
             <form.AppForm>
               <form.SubmitButton>Add task</form.SubmitButton>
             </form.AppForm>

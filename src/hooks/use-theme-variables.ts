@@ -78,9 +78,7 @@ export function useThemeVariables() {
   const setVar = useCallback((name: string, value: string) => {
     document.documentElement.style.setProperty(name, value);
     setVars((prev) =>
-      prev.map((v) =>
-        v.name === name ? { ...v, value, kind: detectKind(value) } : v,
-      ),
+      prev.map((v) => (v.name === name ? { ...v, value, kind: detectKind(value) } : v)),
     );
   }, []);
 

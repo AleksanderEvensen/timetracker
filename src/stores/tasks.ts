@@ -31,11 +31,7 @@ type TasksState = {
   startTask: (taskId: string) => void;
   stopTask: (taskId: string) => void;
   addEntry: (taskId: string, entry: NewEntry) => TimeEntry | null;
-  updateEntry: (
-    currentTaskId: string,
-    entryId: string,
-    update: EntryUpdate,
-  ) => void;
+  updateEntry: (currentTaskId: string, entryId: string, update: EntryUpdate) => void;
   deleteEntry: (taskId: string, entryId: string) => void;
 };
 
@@ -134,11 +130,7 @@ export const useTasksStore = create<TasksState>((set) => ({
       if (!target) return state;
       return {
         tasks: state.tasks.map((t) => {
-          if (
-            t.runningSince &&
-            t.projectId === target.projectId &&
-            t.id !== taskId
-          ) {
+          if (t.runningSince && t.projectId === target.projectId && t.id !== taskId) {
             return finalizeRunningEntry(t, now);
           }
           if (t.id === taskId) {
@@ -152,9 +144,7 @@ export const useTasksStore = create<TasksState>((set) => ({
     set((state) => {
       const now = new Date().toISOString();
       return {
-        tasks: state.tasks.map((t) =>
-          t.id === taskId ? finalizeRunningEntry(t, now) : t,
-        ),
+        tasks: state.tasks.map((t) => (t.id === taskId ? finalizeRunningEntry(t, now) : t)),
       };
     }),
   addEntry: (taskId, entry) => {
@@ -194,9 +184,7 @@ export const useTasksStore = create<TasksState>((set) => ({
               ? { ...t, entries: t.entries.filter((e) => e.id !== entryId) }
               : {
                   ...t,
-                  entries: t.entries.map((e) =>
-                    e.id === entryId ? updatedEntry : e,
-                  ),
+                  entries: t.entries.map((e) => (e.id === entryId ? updatedEntry : e)),
                 };
           }
           if (moved && t.id === targetTaskId) {
@@ -209,28 +197,19 @@ export const useTasksStore = create<TasksState>((set) => ({
   deleteEntry: (taskId, entryId) =>
     set((state) => ({
       tasks: state.tasks.map((t) =>
-        t.id === taskId
-          ? { ...t, entries: t.entries.filter((e) => e.id !== entryId) }
-          : t,
+        t.id === taskId ? { ...t, entries: t.entries.filter((e) => e.id !== entryId) } : t,
       ),
     })),
 }));
 
 export function entryDurationSeconds(entry: TimeEntry): number {
-  return (
-    (new Date(entry.end).getTime() - new Date(entry.start).getTime()) / 1000
-  );
+  return (new Date(entry.end).getTime() - new Date(entry.start).getTime()) / 1000;
 }
 
 export function taskTotalSeconds(task: Task, now = Date.now()): number {
-  const completed = task.entries.reduce(
-    (acc, e) => acc + entryDurationSeconds(e),
-    0,
-  );
+  const completed = task.entries.reduce((acc, e) => acc + entryDurationSeconds(e), 0);
   if (task.runningSince) {
-    return (
-      completed + (now - new Date(task.runningSince).getTime()) / 1000
-    );
+    return completed + (now - new Date(task.runningSince).getTime()) / 1000;
   }
   return completed;
 }

@@ -57,8 +57,7 @@ export const useProjectsStore = create<ProjectsState>((set) => ({
   deleteProject: (id) => {
     set((state) => ({
       projects: state.projects.filter((p) => p.id !== id),
-      currentProjectId:
-        state.currentProjectId === id ? null : state.currentProjectId,
+      currentProjectId: state.currentProjectId === id ? null : state.currentProjectId,
     }));
   },
   setCurrentProject: (id) => set({ currentProjectId: id }),

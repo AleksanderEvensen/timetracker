@@ -1,10 +1,5 @@
 import { useFieldContext } from "#/hooks/form";
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-} from "#/components/ui/field";
+import { Field, FieldDescription, FieldError, FieldLabel } from "#/components/ui/field";
 import { Textarea } from "#/components/ui/textarea";
 import { useId } from "react";
 
@@ -45,9 +40,7 @@ export function TextareaField({
         aria-invalid={isInvalid}
       />
       {description && <FieldDescription>{description}</FieldDescription>}
-      {!hideError && isInvalid && (
-        <FieldError errors={field.state.meta.errors} />
-      )}
+      {!hideError && isInvalid && <FieldError errors={field.state.meta.errors} />}
     </Field>
   );
 }

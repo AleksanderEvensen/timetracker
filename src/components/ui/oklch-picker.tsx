@@ -50,9 +50,7 @@ function OklchPicker({ value, onChange, className }: OklchPickerProps) {
               max={ch.max}
               step={ch.step}
               value={parsed[ch.key]}
-              onChange={(next) =>
-                onChange(formatOklch({ ...parsed, [ch.key]: next }))
-              }
+              onChange={(next) => onChange(formatOklch({ ...parsed, [ch.key]: next }))}
             />
           ))}
         </div>
@@ -78,9 +76,7 @@ function ChannelRow({
 }) {
   return (
     <div className="grid grid-cols-[1.25rem_1fr_3rem] items-center gap-2">
-      <span className="font-mono text-[0.65rem] text-muted-foreground">
-        {label}
-      </span>
+      <span className="font-mono text-[0.65rem] text-muted-foreground">{label}</span>
       <Slider
         min={min}
         max={max}

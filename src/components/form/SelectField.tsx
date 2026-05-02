@@ -1,12 +1,7 @@
 import { useId, useMemo } from "react";
 
 import { useFieldContext } from "#/hooks/form";
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-} from "#/components/ui/field";
+import { Field, FieldDescription, FieldError, FieldLabel } from "#/components/ui/field";
 import {
   Select,
   SelectContent,
@@ -60,9 +55,7 @@ export function SelectField({
         <SelectTrigger id={inputId} className="w-full">
           <SelectValue>
             {(value: unknown) =>
-              typeof value === "string" && labels[value]
-                ? labels[value]
-                : placeholder
+              typeof value === "string" && labels[value] ? labels[value] : placeholder
             }
           </SelectValue>
         </SelectTrigger>
@@ -75,9 +68,7 @@ export function SelectField({
         </SelectContent>
       </Select>
       {description && <FieldDescription>{description}</FieldDescription>}
-      {!hideError && isInvalid && (
-        <FieldError errors={field.state.meta.errors} />
-      )}
+      {!hideError && isInvalid && <FieldError errors={field.state.meta.errors} />}
     </Field>
   );
 }

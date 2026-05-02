@@ -1,17 +1,6 @@
-import {
-  CalendarIcon,
-  ClockIcon,
-  DollarSignIcon,
-  WalletIcon,
-} from "lucide-react";
+import { CalendarIcon, ClockIcon, DollarSignIcon, WalletIcon } from "lucide-react";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "#/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "#/components/ui/card";
 import { formatCurrency, formatDate } from "#/lib/format";
 import type { Project } from "#/stores/projects";
 import type { Currency, DateFormat } from "#/stores/settings";
@@ -74,9 +63,7 @@ function OverviewStat({
         {icon}
         {label}
       </span>
-      <span className="font-heading text-sm font-medium tabular-nums">
-        {value}
-      </span>
+      <span className="font-heading text-sm font-medium tabular-nums">{value}</span>
     </div>
   );
 }

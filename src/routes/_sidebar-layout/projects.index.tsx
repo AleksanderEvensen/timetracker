@@ -55,11 +55,7 @@ function RouteComponent() {
         ))}
         <CreateProjectCard onClick={() => setDialogOpen(true)} />
       </div>
-      <ProjectCreateDialog
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
-        onSubmit={handleCreate}
-      />
+      <ProjectCreateDialog open={dialogOpen} onOpenChange={setDialogOpen} onSubmit={handleCreate} />
     </div>
   );
 }

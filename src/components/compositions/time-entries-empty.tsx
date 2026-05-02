@@ -1,9 +1,4 @@
-import {
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyTitle,
-} from "#/components/ui/empty";
+import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "#/components/ui/empty";
 
 export type TimeEntriesEmptyProps = {
   title?: string;
@@ -21,9 +16,7 @@ export function TimeEntriesEmpty({
       <div className="flex items-center justify-between gap-2 border-b border-border p-3">
         <div className="flex flex-col leading-tight">
           <h2 className="font-heading text-sm font-medium">Time Entries</h2>
-          <span className="text-[0.625rem] text-muted-foreground">
-            {subtitle}
-          </span>
+          <span className="text-[0.625rem] text-muted-foreground">{subtitle}</span>
         </div>
       </div>
       <Empty className="border-0">

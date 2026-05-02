@@ -28,10 +28,7 @@ function RouteComponent() {
   const timeFormat = useSettingsStore((s) => s.timeFormat);
 
   const projectTasks = useMemo(
-    () =>
-      currentProject
-        ? tasks.filter((t) => t.projectId === currentProject.id)
-        : [],
+    () => (currentProject ? tasks.filter((t) => t.projectId === currentProject.id) : []),
     [tasks, currentProject],
   );
 

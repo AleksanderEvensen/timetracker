@@ -1,7 +1,6 @@
 export type Oklch = { l: number; c: number; h: number; a: number };
 
-const OKLCH_RE =
-  /^oklch\(\s*([\d.]+)(%?)\s+([\d.]+)\s+([\d.]+)\s*(?:\/\s*([\d.]+)(%?))?\s*\)$/i;
+const OKLCH_RE = /^oklch\(\s*([\d.]+)(%?)\s+([\d.]+)\s+([\d.]+)\s*(?:\/\s*([\d.]+)(%?))?\s*\)$/i;
 
 export function parseOklch(value: string): Oklch | null {
   const m = OKLCH_RE.exec(value.trim());

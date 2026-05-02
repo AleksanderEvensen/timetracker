@@ -2,10 +2,7 @@ import { createFileRoute, linkOptions, Outlet } from "@tanstack/react-router";
 import { ListIcon, SquareCheckBig } from "lucide-react";
 import { useState } from "react";
 
-import {
-  AppSidebar,
-  type AppSidebarNavItem,
-} from "#/components/compositions/app-sidebar";
+import { AppSidebar, type AppSidebarNavItem } from "#/components/compositions/app-sidebar";
 import { SidebarInset, SidebarProvider } from "#/components/ui/sidebar";
 import { useProjectsStore } from "#/stores/projects";
 
@@ -39,9 +36,7 @@ function RouteComponent() {
   return (
     <SidebarProvider>
       <AppSidebar
-        currentProject={
-          currentProject ? { name: currentProject.name } : undefined
-        }
+        currentProject={currentProject ? { name: currentProject.name } : undefined}
         navItems={navItems}
         settingsLink={settingsLink}
         tracker={

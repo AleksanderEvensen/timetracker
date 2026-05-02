@@ -65,22 +65,13 @@ export function EntryEditPopover({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
-        render={
-          renderTrigger ?? <button type="button" className={triggerClassName} />
-        }
+        render={renderTrigger ?? <button type="button" className={triggerClassName} />}
       >
         {children}
       </PopoverTrigger>
-      <PopoverContent
-        align="end"
-        side="bottom"
-        sideOffset={8}
-        className="w-96"
-      >
+      <PopoverContent align="end" side="bottom" sideOffset={8} className="w-96">
         <PopoverHeader>
-          <PopoverTitle>
-            {isEdit ? "Edit time entry" : "Add time entry"}
-          </PopoverTitle>
+          <PopoverTitle>{isEdit ? "Edit time entry" : "Add time entry"}</PopoverTitle>
           <PopoverDescription>
             {isEdit
               ? "Update times, move it to another task, or delete it."
@@ -168,8 +159,7 @@ function EntryForm({
       <form.AppField
         name="start"
         validators={{
-          onChange: ({ value }) =>
-            !value ? "Start time is required" : undefined,
+          onChange: ({ value }) => (!value ? "Start time is required" : undefined),
         }}
       >
         {(field) => <field.DateTimeField label="Start" required />}
@@ -191,30 +181,18 @@ function EntryForm({
 
       <div className="flex items-center justify-between gap-2 pt-1">
         {onDelete ? (
-          <Button
-            type="button"
-            variant="destructive"
-            size="sm"
-            onClick={onDelete}
-          >
+          <Button type="button" variant="destructive" size="sm" onClick={onDelete}>
             <TrashIcon /> Delete
           </Button>
         ) : (
           <span />
         )}
         <div className="flex items-center gap-2">
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={onCancel}
-          >
+          <Button type="button" variant="outline" size="sm" onClick={onCancel}>
             Cancel
           </Button>
           <form.AppForm>
-            <form.SubmitButton size="sm">
-              {entry ? "Save" : "Add entry"}
-            </form.SubmitButton>
+            <form.SubmitButton size="sm">{entry ? "Save" : "Add entry"}</form.SubmitButton>
           </form.AppForm>
         </div>
       </div>

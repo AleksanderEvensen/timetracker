@@ -5,11 +5,7 @@ import { format } from "date-fns";
 import { Button } from "#/components/ui/button";
 import { Calendar } from "#/components/ui/calendar";
 import { Input } from "#/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "#/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "#/components/ui/popover";
 import { cn } from "#/lib/utils";
 
 type DateTimePickerProps = {
@@ -83,19 +79,10 @@ function DateTimePicker({
         }
       >
         <CalendarIcon />
-        {value ? (
-          format(value, "MMM d, yyyy HH:mm")
-        ) : (
-          <span>{placeholder}</span>
-        )}
+        {value ? format(value, "MMM d, yyyy HH:mm") : <span>{placeholder}</span>}
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
-        <Calendar
-          mode="single"
-          selected={value}
-          onSelect={handleDateSelect}
-          autoFocus
-        />
+        <Calendar mode="single" selected={value} onSelect={handleDateSelect} autoFocus />
         <div className="flex items-center gap-2 border-t border-border p-3">
           <ClockIcon className="size-3.5 text-muted-foreground" />
           <Input

@@ -1,15 +1,5 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "#/components/ui/card";
-import {
-  Field,
-  FieldDescription,
-  FieldLabel,
-} from "#/components/ui/field";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "#/components/ui/card";
+import { Field, FieldDescription, FieldLabel } from "#/components/ui/field";
 import {
   Select,
   SelectContent,
@@ -57,22 +47,15 @@ export function SettingsPreferences({
     <Card>
       <CardHeader>
         <CardTitle>Preferences</CardTitle>
-        <CardDescription>
-          Customize how values are displayed across the app.
-        </CardDescription>
+        <CardDescription>Customize how values are displayed across the app.</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-5">
         <Field>
           <FieldLabel htmlFor="currency-select">Currency</FieldLabel>
-          <Select
-            value={currency}
-            onValueChange={(value) => onCurrencyChange(value as Currency)}
-          >
+          <Select value={currency} onValueChange={(value) => onCurrencyChange(value as Currency)}>
             <SelectTrigger id="currency-select" className="w-full sm:w-72">
               <SelectValue>
-                {(value: unknown) =>
-                  CURRENCY_LABEL[value as Currency] ?? "Select currency"
-                }
+                {(value: unknown) => CURRENCY_LABEL[value as Currency] ?? "Select currency"}
               </SelectValue>
             </SelectTrigger>
             <SelectContent>
@@ -84,8 +67,8 @@ export function SettingsPreferences({
             </SelectContent>
           </Select>
           <FieldDescription>
-            Monetary values such as hourly rates and earnings will be formatted
-            with this currency. Example: {formatCurrency(1234.5, currency)}.
+            Monetary values such as hourly rates and earnings will be formatted with this currency.
+            Example: {formatCurrency(1234.5, currency)}.
           </FieldDescription>
         </Field>
 
@@ -97,10 +80,7 @@ export function SettingsPreferences({
           >
             <SelectTrigger id="date-format-select" className="w-full sm:w-72">
               <SelectValue>
-                {(value: unknown) =>
-                  DATE_FORMAT_LABEL[value as DateFormat] ??
-                  "Select date format"
-                }
+                {(value: unknown) => DATE_FORMAT_LABEL[value as DateFormat] ?? "Select date format"}
               </SelectValue>
             </SelectTrigger>
             <SelectContent>
@@ -124,10 +104,7 @@ export function SettingsPreferences({
           >
             <SelectTrigger id="time-format-select" className="w-full sm:w-72">
               <SelectValue>
-                {(value: unknown) =>
-                  TIME_FORMAT_LABEL[value as TimeFormat] ??
-                  "Select time format"
-                }
+                {(value: unknown) => TIME_FORMAT_LABEL[value as TimeFormat] ?? "Select time format"}
               </SelectValue>
             </SelectTrigger>
             <SelectContent>

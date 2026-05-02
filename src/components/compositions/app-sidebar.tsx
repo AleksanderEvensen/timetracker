@@ -46,12 +46,7 @@ export type AppSidebarProps = {
   tracker?: AppSidebarTracker;
 };
 
-export function AppSidebar({
-  currentProject,
-  navItems,
-  settingsLink,
-  tracker,
-}: AppSidebarProps) {
+export function AppSidebar({ currentProject, navItems, settingsLink, tracker }: AppSidebarProps) {
   return (
     <Sidebar className="max-h-svh h-svh" collapsible="none">
       <SidebarHeader>
@@ -61,14 +56,10 @@ export function AppSidebar({
               <FolderKanbanIcon className="size-6!" />
               <div className="grid flex-1 text-left leading-tight">
                 {currentProject ? (
-                  <span className="truncate text-sm font-medium">
-                    {currentProject.name}
-                  </span>
+                  <span className="truncate text-sm font-medium">{currentProject.name}</span>
                 ) : (
                   <>
-                    <span className="truncate text-sm font-medium">
-                      No project
-                    </span>
+                    <span className="truncate text-sm font-medium">No project</span>
                     <span className="truncate text-[0.625rem] text-sidebar-foreground/60">
                       Tap to choose one
                     </span>
@@ -90,12 +81,7 @@ export function AppSidebar({
                   <SidebarMenuItem key={label}>
                     <SidebarMenuButton
                       tooltip={label}
-                      render={
-                        <Link
-                          {...link}
-                          activeProps={{ "data-active": "true" }}
-                        />
-                      }
+                      render={<Link {...link} activeProps={{ "data-active": "true" }} />}
                     >
                       {Icon ? <Icon /> : null}
                       <span>{label}</span>
@@ -112,23 +98,14 @@ export function AppSidebar({
           <SidebarMenuItem>
             <SidebarMenuButton
               tooltip="Settings"
-              render={
-                <Link
-                  {...settingsLink}
-                  activeProps={{ "data-active": "true" }}
-                />
-              }
+              render={<Link {...settingsLink} activeProps={{ "data-active": "true" }} />}
             >
               <Settings />
               <span>Settings</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        {currentProject && tracker ? (
-          <TrackerCard tracker={tracker} />
-        ) : (
-          <NoProjectCard />
-        )}
+        {currentProject && tracker ? <TrackerCard tracker={tracker} /> : <NoProjectCard />}
       </SidebarFooter>
     </Sidebar>
   );
@@ -175,12 +152,8 @@ function TrackerCard({ tracker }: { tracker: AppSidebarTracker }) {
         {isRunning ? <Pause /> : <Play />}
       </Button>
       <div className="grid min-w-0 flex-1 leading-tight">
-        <span className="truncate text-sm font-medium tabular-nums">
-          {elapsed}
-        </span>
-        <span className="truncate text-[0.625rem] text-sidebar-foreground/60">
-          {subText}
-        </span>
+        <span className="truncate text-sm font-medium tabular-nums">{elapsed}</span>
+        <span className="truncate text-[0.625rem] text-sidebar-foreground/60">{subText}</span>
       </div>
     </div>
   );

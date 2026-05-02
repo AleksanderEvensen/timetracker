@@ -20,9 +20,7 @@ function readRootFontSize() {
 export function ThemeEditor() {
   const [open, setOpen] = useState(false);
   const [isDark, setIsDark] = useState(() =>
-    typeof document !== "undefined"
-      ? document.documentElement.classList.contains("dark")
-      : false,
+    typeof document !== "undefined" ? document.documentElement.classList.contains("dark") : false,
   );
   const [rootFontSize, setRootFontSize] = useState(readRootFontSize);
   const { vars, setVar, reset, rescan } = useThemeVariables();
@@ -67,25 +65,13 @@ export function ThemeEditor() {
         <div className="flex items-center gap-2">
           <Palette className="size-4" />
           <span className="font-heading text-sm font-medium">Theme</span>
-          <span className="font-mono text-[0.65rem] text-muted-foreground">
-            {vars.length} vars
-          </span>
+          <span className="font-mono text-[0.65rem] text-muted-foreground">{vars.length} vars</span>
         </div>
         <div className="flex items-center gap-1">
-          <Button
-            size="icon-sm"
-            variant="ghost"
-            onClick={toggleDark}
-            aria-label="Toggle dark mode"
-          >
+          <Button size="icon-sm" variant="ghost" onClick={toggleDark} aria-label="Toggle dark mode">
             {isDark ? <Sun /> : <Moon />}
           </Button>
-          <Button
-            size="icon-sm"
-            variant="ghost"
-            onClick={rescan}
-            aria-label="Rescan stylesheets"
-          >
+          <Button size="icon-sm" variant="ghost" onClick={rescan} aria-label="Rescan stylesheets">
             <RefreshCw />
           </Button>
           <Button
@@ -186,7 +172,7 @@ function groupByPrefix(vars: ReadonlyArray<ThemeVariable>) {
       buckets.set(prefix, [v]);
     }
   }
-  return Array.from(buckets, ([label, items]) => ({ label, items })).sort(
-    (a, b) => a.label.localeCompare(b.label),
+  return Array.from(buckets, ([label, items]) => ({ label, items })).sort((a, b) =>
+    a.label.localeCompare(b.label),
   );
 }

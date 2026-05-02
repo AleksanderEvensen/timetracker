@@ -28,10 +28,7 @@ const TIME_FORMAT_PATTERN: Record<TimeFormat, string> = {
   "12": "h:mm a",
 };
 
-export function formatDate(
-  date: Date | string,
-  dateFormat: DateFormat,
-): string {
+export function formatDate(date: Date | string, dateFormat: DateFormat): string {
   const d = typeof date === "string" ? new Date(date) : date;
   return format(d, DATE_FORMAT_PATTERN[dateFormat]);
 }

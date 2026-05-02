@@ -1,22 +1,12 @@
 import { useFieldContext } from "#/hooks/form";
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-} from "#/components/ui/field";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "#/components/ui/input-group";
+import { Field, FieldDescription, FieldError, FieldLabel } from "#/components/ui/field";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "#/components/ui/input-group";
 import { useId } from "react";
 
-interface NumberFieldProps
-  extends Omit<
-    React.ComponentProps<typeof InputGroupInput>,
-    "type" | "prefix"
-  > {
+interface NumberFieldProps extends Omit<
+  React.ComponentProps<typeof InputGroupInput>,
+  "type" | "prefix"
+> {
   label?: string;
   required?: boolean;
   description?: string;
@@ -60,14 +50,10 @@ export function NumberField({
           onBlur={field.handleBlur}
           aria-invalid={isInvalid}
         />
-        {suffix != null && (
-          <InputGroupAddon align="inline-end">{suffix}</InputGroupAddon>
-        )}
+        {suffix != null && <InputGroupAddon align="inline-end">{suffix}</InputGroupAddon>}
       </InputGroup>
       {description && <FieldDescription>{description}</FieldDescription>}
-      {!hideError && isInvalid && (
-        <FieldError errors={field.state.meta.errors} />
-      )}
+      {!hideError && isInvalid && <FieldError errors={field.state.meta.errors} />}
     </Field>
   );
 }

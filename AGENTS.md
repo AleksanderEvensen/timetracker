@@ -109,13 +109,7 @@ function RouteComponent() {
 
 ```tsx
 // src/routes/_sidebar-layout/index.tsx
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardFooter,
-} from "#/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "#/components/ui/card";
 import { Button } from "#/components/ui/button";
 import { Empty } from "#/components/ui/empty";
 

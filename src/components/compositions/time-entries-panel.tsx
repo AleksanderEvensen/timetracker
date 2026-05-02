@@ -2,27 +2,13 @@ import { format } from "date-fns";
 import { PlusIcon } from "lucide-react";
 
 import { Button } from "#/components/ui/button";
-import {
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyTitle,
-} from "#/components/ui/empty";
+import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "#/components/ui/empty";
 import {
   EntryEditPopover,
   type EntrySubmitValues,
 } from "#/components/compositions/entry-edit-popover";
-import {
-  formatDuration,
-  formatDurationLong,
-  formatTime,
-} from "#/lib/format";
-import {
-  entryDurationSeconds,
-  type EntryUpdate,
-  type Task,
-  type TimeEntry,
-} from "#/stores/tasks";
+import { formatDuration, formatDurationLong, formatTime } from "#/lib/format";
+import { entryDurationSeconds, type EntryUpdate, type Task, type TimeEntry } from "#/stores/tasks";
 import type { TimeFormat } from "#/stores/settings";
 
 export type TimeEntriesPanelProps = {
@@ -57,13 +43,9 @@ function groupEntriesByDay(entries: TimeEntry[]): DayGroup[] {
     group.totalSeconds += entryDurationSeconds(entry);
   }
   for (const group of map.values()) {
-    group.entries.sort(
-      (a, b) => new Date(b.start).getTime() - new Date(a.start).getTime(),
-    );
+    group.entries.sort((a, b) => new Date(b.start).getTime() - new Date(a.start).getTime());
   }
-  return [...map.values()].sort(
-    (a, b) => b.date.getTime() - a.date.getTime(),
-  );
+  return [...map.values()].sort((a, b) => b.date.getTime() - a.date.getTime());
 }
 
 export function TimeEntriesPanel({
@@ -81,17 +63,13 @@ export function TimeEntriesPanel({
       <div className="flex items-center justify-between gap-2 border-b border-border p-3">
         <div className="flex flex-col leading-tight">
           <h2 className="font-heading text-sm font-medium">Time Entries</h2>
-          <span className="text-[0.625rem] text-muted-foreground">
-            {task.name}
-          </span>
+          <span className="text-[0.625rem] text-muted-foreground">{task.name}</span>
         </div>
         <EntryEditPopover
           taskId={task.id}
           projectTasks={projectTasks}
           onSubmit={onCreateEntry}
-          renderTrigger={
-            <Button variant="ghost" size="icon-sm" aria-label="Add entry" />
-          }
+          renderTrigger={<Button variant="ghost" size="icon-sm" aria-label="Add entry" />}
         >
           <PlusIcon />
         </EntryEditPopover>
@@ -101,8 +79,7 @@ export function TimeEntriesPanel({
           <EmptyHeader>
             <EmptyTitle>No entries yet</EmptyTitle>
             <EmptyDescription>
-              Start the task or add a manual entry to log your first time
-              entry.
+              Start the task or add a manual entry to log your first time entry.
             </EmptyDescription>
           </EmptyHeader>
         </Empty>
@@ -143,9 +120,7 @@ function DaySection({
   return (
     <section className="border-b border-border last:border-b-0">
       <header className="flex items-center justify-between gap-2 px-3 pt-4 pb-2">
-        <h3 className="font-heading text-sm font-medium">
-          {format(group.date, "EEEE, MMMM d")}
-        </h3>
+        <h3 className="font-heading text-sm font-medium">{format(group.date, "EEEE, MMMM d")}</h3>
         <span className="text-xs/relaxed tabular-nums text-muted-foreground">
           {formatDuration(group.totalSeconds)}
         </span>
@@ -170,13 +145,7 @@ function DaySection({
   );
 }
 
-function EntryRowContent({
-  entry,
-  timeFormat,
-}: {
-  entry: TimeEntry;
-  timeFormat: TimeFormat;
-}) {
+function EntryRowContent({ entry, timeFormat }: { entry: TimeEntry; timeFormat: TimeFormat }) {
   const start = new Date(entry.start);
   const end = new Date(entry.end);
   return (

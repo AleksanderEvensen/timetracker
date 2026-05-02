@@ -1,19 +1,8 @@
-import {
-  createFileRoute,
-  Link,
-  Outlet,
-  useNavigate,
-  useParams,
-} from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useNavigate, useParams } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 
 import { Button } from "#/components/ui/button";
-import {
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyTitle,
-} from "#/components/ui/empty";
+import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "#/components/ui/empty";
 import {
   TaskCreateDialog,
   type TaskFormValues,
@@ -43,10 +32,7 @@ function RouteComponent() {
   const navigate = useNavigate();
 
   const projectTasks = useMemo(
-    () =>
-      currentProject
-        ? tasks.filter((t) => t.projectId === currentProject.id)
-        : [],
+    () => (currentProject ? tasks.filter((t) => t.projectId === currentProject.id) : []),
     [tasks, currentProject],
   );
 
@@ -58,9 +44,7 @@ function RouteComponent() {
         <Empty>
           <EmptyHeader>
             <EmptyTitle>No project selected</EmptyTitle>
-            <EmptyDescription>
-              Pick or create a project to start tracking tasks.
-            </EmptyDescription>
+            <EmptyDescription>Pick or create a project to start tracking tasks.</EmptyDescription>
           </EmptyHeader>
           <Button render={<Link to="/projects" />}>Go to projects</Button>
         </Empty>

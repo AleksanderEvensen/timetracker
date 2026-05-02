@@ -1,12 +1,7 @@
 import { PauseIcon, PlayIcon, PlusIcon } from "lucide-react";
 
 import { Button } from "#/components/ui/button";
-import {
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyTitle,
-} from "#/components/ui/empty";
+import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "#/components/ui/empty";
 import { formatDuration } from "#/lib/format";
 import { taskTotalSeconds, type Task } from "#/stores/tasks";
 import { cn } from "#/lib/utils";
@@ -33,16 +28,9 @@ export function TasksList({
       <div className="flex items-center justify-between gap-2 border-b border-border p-3">
         <div className="flex flex-col leading-tight">
           <h2 className="font-heading text-sm font-medium">All tasks</h2>
-          <span className="text-[0.625rem] text-muted-foreground">
-            {subtitle ?? " "}
-          </span>
+          <span className="text-[0.625rem] text-muted-foreground">{subtitle ?? " "}</span>
         </div>
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          onClick={onAddTask}
-          aria-label="Add task"
-        >
+        <Button variant="ghost" size="icon-sm" onClick={onAddTask} aria-label="Add task">
           <PlusIcon />
         </Button>
       </div>
@@ -50,9 +38,7 @@ export function TasksList({
         <Empty className="border-0">
           <EmptyHeader>
             <EmptyTitle>No tasks yet</EmptyTitle>
-            <EmptyDescription>
-              Add a task to start tracking time on this project.
-            </EmptyDescription>
+            <EmptyDescription>Add a task to start tracking time on this project.</EmptyDescription>
           </EmptyHeader>
           <Button size="sm" onClick={onAddTask}>
             <PlusIcon /> Add task
@@ -111,9 +97,7 @@ function TaskRow({
         onClick={onSelect}
         className="flex flex-1 items-center gap-2 py-1.5 text-left outline-none focus-visible:underline"
       >
-        <span className="flex-1 truncate text-xs/relaxed font-medium">
-          {task.name}
-        </span>
+        <span className="flex-1 truncate text-xs/relaxed font-medium">{task.name}</span>
         <span
           className={cn(
             "text-xs/relaxed tabular-nums text-muted-foreground",

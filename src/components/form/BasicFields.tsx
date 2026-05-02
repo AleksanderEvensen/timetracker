@@ -1,10 +1,5 @@
 import { useFieldContext } from "#/hooks/form";
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-} from "#/components/ui/field";
+import { Field, FieldDescription, FieldError, FieldLabel } from "#/components/ui/field";
 import { Input } from "#/components/ui/input";
 import {
   InputGroup,
@@ -22,8 +17,7 @@ interface BasicFieldPropBase {
   hideError?: boolean;
 }
 
-interface InputFieldProps
-  extends BasicFieldPropBase, React.ComponentProps<typeof Input> {}
+interface InputFieldProps extends BasicFieldPropBase, React.ComponentProps<typeof Input> {}
 
 export function InputField({
   label,
@@ -39,9 +33,7 @@ export function InputField({
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
   return (
-    <Field
-      data-invalid={field.state.meta.isTouched && !field.state.meta.isValid}
-    >
+    <Field data-invalid={field.state.meta.isTouched && !field.state.meta.isValid}>
       {label && (
         <FieldLabel htmlFor={inputId}>
           {label} {required && <span className="text-destructive">*</span>}
@@ -73,9 +65,7 @@ export function InputField({
         aria-invalid={isInvalid}
       />
       {description && <FieldDescription>{description}</FieldDescription>}
-      {!hideError && isInvalid && (
-        <FieldError errors={field.state.meta.errors} />
-      )}
+      {!hideError && isInvalid && <FieldError errors={field.state.meta.errors} />}
     </Field>
   );
 }
@@ -98,9 +88,7 @@ export function PasswordField({
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
   return (
-    <Field
-      data-invalid={field.state.meta.isTouched && !field.state.meta.isValid}
-    >
+    <Field data-invalid={field.state.meta.isTouched && !field.state.meta.isValid}>
       {label && (
         <FieldLabel htmlFor={inputId}>
           {label} {required && <span className="text-destructive">*</span>}
@@ -120,18 +108,13 @@ export function PasswordField({
           aria-invalid={isInvalid}
         />
         <InputGroupAddon align="inline-end">
-          <InputGroupButton
-            size="icon-xs"
-            onClick={() => setShowPassword((prev) => !prev)}
-          >
+          <InputGroupButton size="icon-xs" onClick={() => setShowPassword((prev) => !prev)}>
             {showPassword ? <EyeOffIcon /> : <EyeIcon />}
           </InputGroupButton>
         </InputGroupAddon>
       </InputGroup>
       {description && <FieldDescription>{description}</FieldDescription>}
-      {!hideError && isInvalid && (
-        <FieldError errors={field.state.meta.errors} />
-      )}
+      {!hideError && isInvalid && <FieldError errors={field.state.meta.errors} />}
     </Field>
   );
 }

@@ -15,18 +15,10 @@ type CssVarFieldProps = {
 
 const LENGTH_RE = /^(-?\d*\.?\d+)(rem|em|px|%|vh|vw|ch|pt)$/;
 
-function CssVarField({
-  name,
-  value,
-  kind,
-  onChange,
-  className,
-}: CssVarFieldProps) {
+function CssVarField({ name, value, kind, onChange, className }: CssVarFieldProps) {
   return (
     <div className={cn("flex flex-col gap-1.5", className)}>
-      <Label className="font-mono text-[0.7rem] text-muted-foreground">
-        {name}
-      </Label>
+      <Label className="font-mono text-[0.7rem] text-muted-foreground">{name}</Label>
       <FieldEditor value={value} kind={kind} onChange={onChange} />
     </div>
   );
@@ -60,13 +52,7 @@ function FieldEditor({
   );
 }
 
-function LengthEditor({
-  value,
-  onChange,
-}: {
-  value: string;
-  onChange: (next: string) => void;
-}) {
+function LengthEditor({ value, onChange }: { value: string; onChange: (next: string) => void }) {
   const m = LENGTH_RE.exec(value.trim());
   if (!m) {
     return (
@@ -105,13 +91,7 @@ function LengthEditor({
   );
 }
 
-function NumberEditor({
-  value,
-  onChange,
-}: {
-  value: string;
-  onChange: (next: string) => void;
-}) {
+function NumberEditor({ value, onChange }: { value: string; onChange: (next: string) => void }) {
   return (
     <Input
       type="number"

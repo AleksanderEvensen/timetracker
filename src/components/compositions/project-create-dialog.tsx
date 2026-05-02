@@ -22,11 +22,7 @@ export type ProjectCreateDialogProps = {
   onSubmit: (values: ProjectFormValues) => void | Promise<void>;
 };
 
-export function ProjectCreateDialog({
-  open,
-  onOpenChange,
-  onSubmit,
-}: ProjectCreateDialogProps) {
+export function ProjectCreateDialog({ open, onOpenChange, onSubmit }: ProjectCreateDialogProps) {
   const form = useAppForm({
     defaultValues: {
       name: "",
@@ -50,33 +46,24 @@ export function ProjectCreateDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create project</DialogTitle>
-          <DialogDescription>
-            Set up a new project to start tracking time.
-          </DialogDescription>
+          <DialogDescription>Set up a new project to start tracking time.</DialogDescription>
         </DialogHeader>
         <form {...formHandlers(form)} className="flex flex-col gap-4">
           <form.AppField
             name="name"
             validators={{
-              onChange: ({ value }) =>
-                value.trim().length === 0 ? "Name is required" : undefined,
+              onChange: ({ value }) => (value.trim().length === 0 ? "Name is required" : undefined),
             }}
           >
             {(field) => (
-              <field.InputField
-                label="Name"
-                required
-                placeholder="My Project"
-                autoFocus
-              />
+              <field.InputField label="Name" required placeholder="My Project" autoFocus />
             )}
           </form.AppField>
 
           <form.AppField
             name="startDate"
             validators={{
-              onChange: ({ value }) =>
-                !value ? "Start date is required" : undefined,
+              onChange: ({ value }) => (!value ? "Start date is required" : undefined),
             }}
           >
             {(field) => <field.DateField label="Start date" required />}
@@ -104,9 +91,7 @@ export function ProjectCreateDialog({
           </form.AppField>
 
           <DialogFooter>
-            <DialogClose render={<Button variant="outline" />}>
-              Cancel
-            </DialogClose>
+            <DialogClose render={<Button variant="outline" />}>Cancel</DialogClose>
             <form.AppForm>
               <form.SubmitButton>Create project</form.SubmitButton>
             </form.AppForm>
