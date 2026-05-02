@@ -1,16 +1,15 @@
 /// <reference types="vite/client" />
-import { HeadContent, Scripts, createRootRoute } from "@tanstack/solid-router";
-import { TanStackRouterDevtoolsPanel } from "@tanstack/solid-router-devtools";
-import { HydrationScript } from "solid-js/web";
-import type * as Solid from "solid-js";
+import { HeadContent, Outlet, Scripts, createRootRoute } from "@tanstack/react-router";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { TanStackDevtools } from "@tanstack/react-devtools";
 import appCss from "#/styles.css?url";
-import { TanStackDevtools } from "@tanstack/solid-devtools";
 
 export const Route = createRootRoute({
+  ssr: false,
   head: () => ({
     meta: [
       {
-        charset: "utf-8",
+        charSet: "utf-8",
       },
       {
         name: "viewport",
@@ -20,23 +19,21 @@ export const Route = createRootRoute({
     links: [{ rel: "stylesheet", href: appCss }],
   }),
   shellComponent: RootDocument,
+  pendingComponent: () => <div>Loading...</div>,
 });
 
-function RootDocument({ children }: { children: Solid.JSX.Element }) {
+function RootDocument() {
   return (
     <html>
       <head>
-        <HydrationScript />
+        <HeadContent />
       </head>
       <body>
-        <HeadContent />
-        {children}
+        <Outlet />
         <TanStackDevtools
           config={{
             inspectHotkey: ["Meta", "Shift"],
-            openHotkey: undefined,
             defaultOpen: false,
-            hideUntilHover: true,
           }}
           plugins={[
             {

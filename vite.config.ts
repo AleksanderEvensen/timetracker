@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
-import solid from "vite-plugin-solid";
+import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import { tanstackStart } from "@tanstack/solid-start/plugin/vite";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { nitro } from "nitro/vite";
 import { devtools } from "@tanstack/devtools-vite";
 
@@ -42,7 +42,7 @@ export default defineConfig(async () => ({
           }
         : undefined,
     }),
-    solid({ ssr: true }),
+    react(),
   ],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
