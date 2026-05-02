@@ -13,7 +13,8 @@ import { Route as SidebarLayoutRouteImport } from './routes/_sidebar-layout'
 import { Route as SidebarLayoutIndexRouteImport } from './routes/_sidebar-layout/index'
 import { Route as SidebarLayoutTimelineRouteImport } from './routes/_sidebar-layout/timeline'
 import { Route as SidebarLayoutSettingsRouteImport } from './routes/_sidebar-layout/settings'
-import { Route as SidebarLayoutProjectsRouteImport } from './routes/_sidebar-layout/projects'
+import { Route as SidebarLayoutProjectsIndexRouteImport } from './routes/_sidebar-layout/projects.index'
+import { Route as SidebarLayoutProjectsIdRouteImport } from './routes/_sidebar-layout/projects.$id'
 
 const SidebarLayoutRoute = SidebarLayoutRouteImport.update({
   id: '/_sidebar-layout',
@@ -34,44 +35,54 @@ const SidebarLayoutSettingsRoute = SidebarLayoutSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => SidebarLayoutRoute,
 } as any)
-const SidebarLayoutProjectsRoute = SidebarLayoutProjectsRouteImport.update({
-  id: '/projects',
-  path: '/projects',
+const SidebarLayoutProjectsIndexRoute =
+  SidebarLayoutProjectsIndexRouteImport.update({
+    id: '/projects/',
+    path: '/projects/',
+    getParentRoute: () => SidebarLayoutRoute,
+  } as any)
+const SidebarLayoutProjectsIdRoute = SidebarLayoutProjectsIdRouteImport.update({
+  id: '/projects/$id',
+  path: '/projects/$id',
   getParentRoute: () => SidebarLayoutRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof SidebarLayoutIndexRoute
-  '/projects': typeof SidebarLayoutProjectsRoute
   '/settings': typeof SidebarLayoutSettingsRoute
   '/timeline': typeof SidebarLayoutTimelineRoute
+  '/projects/$id': typeof SidebarLayoutProjectsIdRoute
+  '/projects/': typeof SidebarLayoutProjectsIndexRoute
 }
 export interface FileRoutesByTo {
-  '/projects': typeof SidebarLayoutProjectsRoute
   '/settings': typeof SidebarLayoutSettingsRoute
   '/timeline': typeof SidebarLayoutTimelineRoute
   '/': typeof SidebarLayoutIndexRoute
+  '/projects/$id': typeof SidebarLayoutProjectsIdRoute
+  '/projects': typeof SidebarLayoutProjectsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_sidebar-layout': typeof SidebarLayoutRouteWithChildren
-  '/_sidebar-layout/projects': typeof SidebarLayoutProjectsRoute
   '/_sidebar-layout/settings': typeof SidebarLayoutSettingsRoute
   '/_sidebar-layout/timeline': typeof SidebarLayoutTimelineRoute
   '/_sidebar-layout/': typeof SidebarLayoutIndexRoute
+  '/_sidebar-layout/projects/$id': typeof SidebarLayoutProjectsIdRoute
+  '/_sidebar-layout/projects/': typeof SidebarLayoutProjectsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/projects' | '/settings' | '/timeline'
+  fullPaths: '/' | '/settings' | '/timeline' | '/projects/$id' | '/projects/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/projects' | '/settings' | '/timeline' | '/'
+  to: '/settings' | '/timeline' | '/' | '/projects/$id' | '/projects'
   id:
     | '__root__'
     | '/_sidebar-layout'
-    | '/_sidebar-layout/projects'
     | '/_sidebar-layout/settings'
     | '/_sidebar-layout/timeline'
     | '/_sidebar-layout/'
+    | '/_sidebar-layout/projects/$id'
+    | '/_sidebar-layout/projects/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -108,28 +119,37 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SidebarLayoutSettingsRouteImport
       parentRoute: typeof SidebarLayoutRoute
     }
-    '/_sidebar-layout/projects': {
-      id: '/_sidebar-layout/projects'
+    '/_sidebar-layout/projects/': {
+      id: '/_sidebar-layout/projects/'
       path: '/projects'
-      fullPath: '/projects'
-      preLoaderRoute: typeof SidebarLayoutProjectsRouteImport
+      fullPath: '/projects/'
+      preLoaderRoute: typeof SidebarLayoutProjectsIndexRouteImport
+      parentRoute: typeof SidebarLayoutRoute
+    }
+    '/_sidebar-layout/projects/$id': {
+      id: '/_sidebar-layout/projects/$id'
+      path: '/projects/$id'
+      fullPath: '/projects/$id'
+      preLoaderRoute: typeof SidebarLayoutProjectsIdRouteImport
       parentRoute: typeof SidebarLayoutRoute
     }
   }
 }
 
 interface SidebarLayoutRouteChildren {
-  SidebarLayoutProjectsRoute: typeof SidebarLayoutProjectsRoute
   SidebarLayoutSettingsRoute: typeof SidebarLayoutSettingsRoute
   SidebarLayoutTimelineRoute: typeof SidebarLayoutTimelineRoute
   SidebarLayoutIndexRoute: typeof SidebarLayoutIndexRoute
+  SidebarLayoutProjectsIdRoute: typeof SidebarLayoutProjectsIdRoute
+  SidebarLayoutProjectsIndexRoute: typeof SidebarLayoutProjectsIndexRoute
 }
 
 const SidebarLayoutRouteChildren: SidebarLayoutRouteChildren = {
-  SidebarLayoutProjectsRoute: SidebarLayoutProjectsRoute,
   SidebarLayoutSettingsRoute: SidebarLayoutSettingsRoute,
   SidebarLayoutTimelineRoute: SidebarLayoutTimelineRoute,
   SidebarLayoutIndexRoute: SidebarLayoutIndexRoute,
+  SidebarLayoutProjectsIdRoute: SidebarLayoutProjectsIdRoute,
+  SidebarLayoutProjectsIndexRoute: SidebarLayoutProjectsIndexRoute,
 }
 
 const SidebarLayoutRouteWithChildren = SidebarLayoutRoute._addFileChildren(

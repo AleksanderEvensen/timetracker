@@ -40,15 +40,14 @@ export type AppSidebarTracker = {
 };
 
 export type AppSidebarProps = {
-  projectName: string;
+  currentProject?: AppSidebarProject;
   navItems: ReadonlyArray<AppSidebarNavItem>;
   settingsLink: LinkComponentProps<"a">;
-  tracker: AppSidebarTracker;
-  onProjectSelect?: () => void;
+  tracker?: AppSidebarTracker;
 };
 
 export function AppSidebar({
-  projectName,
+  currentProject,
   navItems,
   settingsLink,
   tracker,
@@ -60,8 +59,21 @@ export function AppSidebar({
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" render={<Link to="/projects" />}>
               <FolderKanbanIcon className="size-6!" />
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{projectName}</span>
+              <div className="grid flex-1 text-left leading-tight">
+                {currentProject ? (
+                  <span className="truncate text-sm font-medium">
+                    {currentProject.name}
+                  </span>
+                ) : (
+                  <>
+                    <span className="truncate text-sm font-medium">
+                      No project
+                    </span>
+                    <span className="truncate text-[0.625rem] text-sidebar-foreground/60">
+                      Tap to choose one
+                    </span>
+                  </>
+                )}
               </div>
               <ChevronRightIcon className="ml-auto opacity-60" />
             </SidebarMenuButton>
@@ -112,9 +124,36 @@ export function AppSidebar({
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        <TrackerCard tracker={tracker} />
+        {currentProject && tracker ? (
+          <TrackerCard tracker={tracker} />
+        ) : (
+          <NoProjectCard />
+        )}
       </SidebarFooter>
     </Sidebar>
+  );
+}
+
+function NoProjectCard() {
+  return (
+    <Link
+      to="/projects"
+      className={cn(
+        "group/no-project flex items-center gap-2 rounded-md border border-dashed border-sidebar-border bg-sidebar-accent/20 p-2 text-sidebar-foreground transition-colors outline-none",
+        "hover:bg-sidebar-accent/40",
+        "focus-visible:border-sidebar-ring focus-visible:ring-2 focus-visible:ring-sidebar-ring/30",
+      )}
+    >
+      <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-sidebar-accent text-sidebar-accent-foreground">
+        <FolderKanbanIcon className="size-4" />
+      </span>
+      <div className="grid min-w-0 flex-1 leading-tight">
+        <span className="truncate text-sm font-medium">No project</span>
+        <span className="truncate text-[0.625rem] text-sidebar-foreground/60">
+          Select or create one to track time
+        </span>
+      </div>
+    </Link>
   );
 }
 
