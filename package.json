@@ -4,30 +4,32 @@
   "description": "",
   "license": "MIT",
   "type": "module",
+  "main": "./out/main/index.js",
   "imports": {
     "#/*": "./src/*"
   },
   "scripts": {
-    "start": "vite",
-    "dev": "vite dev",
-    "build": "vite build && tsc --noEmit",
-    "serve": "vite preview",
+    "start": "electron-vite preview",
+    "dev": "electron-vite dev",
+    "build": "bun run typecheck && electron-vite build",
     "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
     "lint": "oxlint .",
     "lint:fix": "oxlint --fix .",
-    "format:check": "oxfmt --check ."
+    "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
+    "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
+    "typecheck": "bun run typecheck:node && bun run typecheck:web"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",
+    "@electron-toolkit/preload": "^3.0.2",
+    "@electron-toolkit/utils": "^4.0.0",
     "@fontsource-variable/inter": "^5.2.8",
     "@tailwindcss/vite": "^4.2.4",
     "@tanstack/react-devtools": "^0.10.2",
     "@tanstack/react-form": "^1.29.1",
     "@tanstack/react-router": "^1.169.1",
     "@tanstack/react-router-devtools": "^1.166.13",
-    "@tanstack/react-start": "^1.167.59",
-    "@tauri-apps/api": "^2.11.0",
-    "@tauri-apps/plugin-opener": "^2.5.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
@@ -45,15 +47,44 @@
     "zustand": "^5.0.12"
   },
   "devDependencies": {
+    "@electron-toolkit/tsconfig": "^2.0.0",
     "@tanstack/devtools-vite": "^0.6.0",
-    "@tauri-apps/cli": "^2.11.0",
+    "@tanstack/router-plugin": "^1.167.32",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
+    "concurrently": "^9.1.0",
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8",
+    "electron-vite": "^5.0.0",
     "nitro": "^3.0.260429-beta",
     "oxfmt": "^0.47.0",
     "oxlint": "^1.62.0",
     "typescript": "~6.0.3",
-    "vite": "^8.0.10"
+    "vite": "^8.0.10",
+    "wait-on": "^8.0.1"
+  },
+  "build": {
+    "appId": "com.aleks.timetracker",
+    "productName": "timetracker",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**/*",
+      ".output/public/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "icon": "build/icon.icns",
+      "category": "public.app-category.productivity"
+    },
+    "win": {
+      "icon": "build/icon.ico"
+    },
+    "linux": {
+      "icon": "build/icon.png",
+      "category": "Utility"
+    }
   }
 }

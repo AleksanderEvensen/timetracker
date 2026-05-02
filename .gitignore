@@ -3,4 +3,5 @@ dist/
 .tanstack
 .output
 out/
+release/
 .fallow/
