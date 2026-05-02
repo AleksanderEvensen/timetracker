@@ -4,7 +4,7 @@ import { createClient, type Client, type InValue } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
 import { migrate } from "drizzle-orm/libsql/migrator";
 
-export type DbMethod = "run" | "all" | "values" | "get";
+type DbMethod = "run" | "all" | "values" | "get";
 
 export type DbQuery = {
   sql: string;
@@ -15,7 +15,9 @@ export type DbQuery = {
 let client: Client | null = null;
 
 function resolveDbPath(): string {
-  const env = (import.meta as unknown as { env: Record<string, string | undefined> }).env;
+  const env = (
+    import.meta as unknown as { env: Record<string, string | undefined> }
+  ).env;
   const override = env.MAIN_VITE_DB_PATH;
   if (override && override.length > 0) {
     return isAbsolute(override) ? override : resolve(process.cwd(), override);
@@ -32,7 +34,10 @@ function getClient(): Client {
   return client;
 }
 
-function rowsToArrays(rows: Record<string, unknown>[], columns: string[]): unknown[][] {
+function rowsToArrays(
+  rows: Record<string, unknown>[],
+  columns: string[],
+): unknown[][] {
   return rows.map((row) => columns.map((col) => row[col]));
 }
 
@@ -41,7 +46,10 @@ async function execute(query: DbQuery): Promise<{ rows: unknown[] }> {
     sql: query.sql,
     args: query.params,
   });
-  const rows = rowsToArrays(result.rows as unknown as Record<string, unknown>[], result.columns);
+  const rows = rowsToArrays(
+    result.rows as unknown as Record<string, unknown>[],
+    result.columns,
+  );
   if (query.method === "get") {
     return { rows: rows[0] ?? [] };
   }
@@ -57,9 +65,12 @@ export async function runMigrations(): Promise<void> {
 }
 
 export function registerDbIpc(): void {
-  ipcMain.handle("db:execute", async (_event, sql: string, params: InValue[], method: DbMethod) => {
-    return execute({ sql, params, method });
-  });
+  ipcMain.handle(
+    "db:execute",
+    async (_event, sql: string, params: InValue[], method: DbMethod) => {
+      return execute({ sql, params, method });
+    },
+  );
 
   ipcMain.handle("db:batch", async (_event, queries: DbQuery[]) => {
     const c = getClient();

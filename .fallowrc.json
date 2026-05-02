@@ -1,6 +1,18 @@
 {
   "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
-  "entry": ["src/router.tsx"],
+  "entry": [
+    "src/main.tsx",
+    "electron/main/index.ts",
+    "electron/preload/index.ts"
+  ],
   "duplicates": {},
-  "rules": {}
+  "rules": {},
+  "ignoreDependencies": [
+    "shadcn",
+    "tailwind-variants",
+    "tw-animate-css",
+    "@fontsource-variable/inter"
+  ],
+  "ignoreExports": [{ "file": "src/components/ui/**/*", "exports": ["*"] }],
+  "ignorePatterns": ["src/styles.css"]
 }

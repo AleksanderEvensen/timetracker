@@ -1,14 +1,18 @@
 /// <reference types="vite/client" />
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
+import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import "#/styles.css";
 import { ThemeEditor } from "#/components/compositions/theme-editor";
 import { TooltipProvider } from "#/components/ui/tooltip";
-import { Outlet, createRootRoute } from "@tanstack/react-router";
+import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
+import { QueryClient } from "@tanstack/react-query";
 
-export const Route = createRootRoute({
-  component: RootComponent,
-});
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
+  {
+    component: RootComponent,
+  },
+);
 
 function RootComponent() {
   return (
@@ -26,6 +30,10 @@ function RootComponent() {
           {
             name: "TanStack Router",
             render: <TanStackRouterDevtoolsPanel />,
+          },
+          {
+            name: "TanStack Query",
+            render: <ReactQueryDevtoolsPanel />,
           },
         ]}
       />

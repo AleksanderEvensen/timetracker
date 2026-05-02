@@ -1,8 +1,13 @@
 import { useId } from "react";
 
-import { useFieldContext } from "#/hooks/form";
+import { useFieldContext } from "#/hooks/form-context";
 import { DateTimePicker } from "#/components/ui/date-time-picker";
-import { Field, FieldDescription, FieldError, FieldLabel } from "#/components/ui/field";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "#/components/ui/field";
 
 interface DateTimeFieldProps {
   label?: string;
@@ -59,7 +64,9 @@ export function DateTimeField({
         aria-invalid={isInvalid}
       />
       {description && <FieldDescription>{description}</FieldDescription>}
-      {!hideError && isInvalid && <FieldError errors={field.state.meta.errors} />}
+      {!hideError && isInvalid && (
+        <FieldError errors={field.state.meta.errors} />
+      )}
     </Field>
   );
 }

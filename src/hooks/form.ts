@@ -1,4 +1,4 @@
-import { createFormHookContexts, createFormHook } from "@tanstack/react-form";
+import { createFormHook } from "@tanstack/react-form";
 import { SubmitButton } from "#/components/form/SubmitButton";
 import { InputField, PasswordField } from "#/components/form/BasicFields";
 import { NumberField } from "#/components/form/NumberField";
@@ -7,6 +7,7 @@ import { DateTimeField } from "#/components/form/DateTimeField";
 import { SelectField } from "#/components/form/SelectField";
 import { TextareaField } from "#/components/form/TextareaField";
 import { FormErrors } from "#/components/form/FromErrors";
+import { fieldContext, formContext } from "./form-context";
 
 type FormAPI = {
   handleSubmit: () => void | Promise<void>;
@@ -29,9 +30,7 @@ export function formHandlers<TFormAPI extends FormAPI>(
   };
 }
 
-export const { fieldContext, useFieldContext, formContext, useFormContext } =
-  createFormHookContexts();
-
+// fallow-ignore-next-line unused-exports
 export const { useAppForm, withForm, withFieldGroup } = createFormHook({
   fieldComponents: {
     InputField,

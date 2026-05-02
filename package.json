@@ -31,6 +31,8 @@
     "@tailwindcss/vite": "^4.2.4",
     "@tanstack/react-devtools": "^0.10.2",
     "@tanstack/react-form": "^1.29.1",
+    "@tanstack/react-query": "^5.100.8",
+    "@tanstack/react-query-devtools": "^5.100.8",
     "@tanstack/react-router": "^1.169.1",
     "@tanstack/react-router-devtools": "^1.166.13",
     "class-variance-authority": "^0.7.1",
@@ -59,15 +61,13 @@
     "@vitejs/plugin-react": "^6.0.1",
     "concurrently": "^9.1.0",
     "drizzle-kit": "^0.31.10",
-    "electron": "^33.2.0",
-    "electron-builder": "^25.1.8",
+    "electron": "^41.5.0",
+    "electron-builder": "^26.8.1",
     "electron-vite": "^5.0.0",
-    "nitro": "^3.0.260429-beta",
     "oxfmt": "^0.47.0",
     "oxlint": "^1.62.0",
     "typescript": "~6.0.3",
-    "vite": "^8.0.10",
-    "wait-on": "^8.0.1"
+    "vite": "^8.0.10"
   },
   "build": {
     "appId": "com.aleks.timetracker",

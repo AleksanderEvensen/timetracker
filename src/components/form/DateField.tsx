@@ -1,8 +1,13 @@
 import { useId } from "react";
 
-import { useFieldContext } from "#/hooks/form";
+import { useFieldContext } from "#/hooks/form-context";
 import { DatePicker } from "#/components/ui/date-picker";
-import { Field, FieldDescription, FieldError, FieldLabel } from "#/components/ui/field";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "#/components/ui/field";
 
 interface DateFieldProps {
   label?: string;
@@ -58,7 +63,9 @@ export function DateField({
         aria-invalid={isInvalid}
       />
       {description && <FieldDescription>{description}</FieldDescription>}
-      {!hideError && isInvalid && <FieldError errors={field.state.meta.errors} />}
+      {!hideError && isInvalid && (
+        <FieldError errors={field.state.meta.errors} />
+      )}
     </Field>
   );
 }
